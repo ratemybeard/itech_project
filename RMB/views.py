@@ -87,31 +87,34 @@ def dislike_image(request):
 
     return HttpResponse(dislikes)
 	
-
+#Must be signed in.
+#Page to Upload images
+#User can also view previous uploads.
 @login_required
 def upload_images(request):
     context = RequestContext(request)
     context_dict={}
 
-    if request.method == 'POST':  # render the form, and throw it back.
-        # take the form data and process it!
-
+    if request.method == 'POST': 
+	#processes form
         form = UploadImagesForm(request.POST, request.FILES)
 
         if form.is_valid():
 
             upload_image = form.save(commit=False)
             upload_image.img_user = request.user
-
+	
 
             if 'image' in request.FILES:
                 upload_image.image  =request.FILES['image']
             print upload_image.img_user
             upload_image.save()
+            #next sequence of code will send the image back as form is sent
             form = UploadImagesForm()
             context_dict = {'upload_image': form}
             all_images = Images.objects.filter(img_user=request.user)
             context_dict['all_images']=all_images
+            #Likes created to associate likes to image
             like = Likes(likes=0,dislikes=0)
             like.image_liked=upload_image
             print like
@@ -138,13 +141,13 @@ def upload_images(request):
 
         return render_to_response('rmb/profile.html', context_dict, context)
 
-
+#newest images page
 def newest(request):
     context = RequestContext(request)
     context_dict={}
 
     try:
-        # RECENT RATINGS
+        
         all_images = Images.objects.order_by('-img_date')
         image_likes = Likes.objects.all()
         context_dict['all_images']=all_images
@@ -161,7 +164,7 @@ def newest(request):
         pass
     return render_to_response('rmb/newest.html', context_dict, context)
 
-
+# noob beard images page
 def noob(request):
     context = RequestContext(request)
     context_dict={}
@@ -184,7 +187,7 @@ def noob(request):
         pass
     return render_to_response('rmb/noob.html', context_dict, context)
 
-
+#moustache images page
 def moustache(request):
     context = RequestContext(request)
     context_dict={}
@@ -207,7 +210,7 @@ def moustache(request):
         pass
     return render_to_response('rmb/moustache.html', context_dict, context)
 
-
+#half beard images page
 def half(request):
     context = RequestContext(request)
     context_dict={}
@@ -230,7 +233,7 @@ def half(request):
         pass
     return render_to_response('rmb/half.html', context_dict, context)
 
-
+#full beard images beard
 def full(request):
     context = RequestContext(request)
     context_dict={}
