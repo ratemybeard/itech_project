@@ -15,4 +15,6 @@ With the appropriate packages installed you should then clone our github reposit
 
 You can either select "Clone in Desktop" or "Download Zip" from the github menu to the right of the repository home screen, or else issue a similar command from a command prompt or terminal window.
 
-To run the program locally navigate to the project directory using the command prompt or terminal window, and issue the command "python manage.py runserver". With the program running navigate to 127.0.0.1:8000/rmb using a web browser to view the web application on your local machine. ALternatively navigate to ratemybeard.pythonanywhere.com/rmb to view the deployed version of our application.
+To run the program locally navigate to the project directory using the command prompt or terminal window, and issue the command "python manage.py runserver". With the program running navigate to 127.0.0.1:8000/rmb using a web browser to view the web application on your local machine. Alternatively navigate to ratemybeard.pythonanywhere.com/rmb to view the deployed version of our application.
+
+Our site can be tested using the login detail: username - test, password - test123
