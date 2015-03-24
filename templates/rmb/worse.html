@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+{% extends 'rmb/base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+Rate my Beard block
+{% endblock %}
+<html>
+<head>
+</head>
+{% block body_block %}
+</body>
+<div class="container-fluid main-container">
+<div class="row">
+		<!-- sidebars for categories and ratings -->
+		<div class="col-md-2 sidebar">
+			<ul class="nav nav-pills nav-stacked">
+				<li class="active"><a href="">Categories</a></li>
+				<li><a href="{% url 'full' %}">Full Beards</a></li>
+				<li><a href="{% url 'half' %}">Half Beards</a></li>
+				<li><a href="{% url 'moustache' %}">Moustaches</a></li>
+				<li><a href="{% url 'noob' %}">Noob Beards</a></li>
+				<li class="active"><a href="">Ratings</a></li>
+				<li><a href="{% url 'index' %}">Top Beards</a></li>
+				<li><a href="{% url 'newest' %}">New Beards</a></li>
+				<li><a id="worst" href="{% url 'worse' %}" data-catid="worst_id">Worst Beards</a></li>
+			</ul>
+		</div>
+		<!--header for images -->
+		<div class="col-md-10">
+		<ul class="nav nav-pills nav-stacked">
+				<li class="active"><a href="">Top Beards</a></li>
+		</ul>
+			<div class="jumbotron" id="likes_main">
+			<!-- Most liked photos -->
+			{% if image_likes %}
+				<!-- loop though the image likes -->
+				{% for likes in image_likes %}
+					<!-- Create a box around image,comments,like,dislike -->
+					<div class='image_box'>
+						<ul class='list-inline'>
+							<li>
+								<div class="well">
+									<a href="/static/images/{{ likes.image_liked }}.jpg">
+									<img class="comment-pic" src= "/static/images/{{ likes.image_liked }}.jpg" alt="{{likes.image_liked}}"/>
+									</a>
+									<!-- show information we wanted in the box -->
+									<div><strong class="uploadedby">Uploaded By: {{ likes.image_liked.img_user }}</strong></div>
+									<div><span class="date">On: {{likes.image_liked.img_date }}</span></div>
+							        <div class="well">
+										{% for comments in all_comments %}
+											{% if comments.img_commented ==  likes.image_liked  %}
+												<ul  id="sortable" class="list-unstyled ui-sortable">
+												<div><strong class="pull-left primary-font">{{ comments.com_by }}</strong></div>
+												<div><small class="pull-right text-muted">
+												<span class="glyphicon glyphicon-time"></span>{{comments.com_date_added|timesince}} ago</small></div>
+												</br>
+													<div id="test"><span class="ui-state-default pull-left">{{ comments.com_descr }}</span></div>
+												</br>
+												</ul>
+											{% endif %}
+										{% endfor %}
+										<!-- input for comments -->
+										<div class="input-group">
+										<input type="text" name="com" class="form-control input-sm chat-input" placeholder="Write your message here..." />
+										<span class="input-group-btn">
+											<button class="comments btn btn-primary btn-sm" test="something" data-catid="{{likes.id}}"><span class="glyphicon glyphicon-comment">Comment</span> </button>
+										</span>
+										</div>
+									</div>
+									<div>
+									<!-- likes dislikes buttons -->
+									<button class ="likes btn btn-circle-sm btn-success" data-catid="{{likes.id}}" /><span  class="glyphicon glyphicon-thumbs-up">{{ likes.likes }}</span></button>
+									<button class ="dislikes btn btn-circle-sm btn-danger" data-catid2="{{likes.id}}" /><span class="glyphicon glyphicon-thumbs-down">{{ likes.dislikes }}</span></button>
+									</div>
+								</div>
+							<li>
+						</ul>
+					</div>
+				{% endfor %}
+			<!-- else no image was liked hence no images exist as images default like is 0-->
+			{% else %}
+				<strong>No images found</strong>
+			{% endif %}
+
+			</div>
+		</div>
+</div>
+</div>
+{% endblock %}
+</body>
+</html>

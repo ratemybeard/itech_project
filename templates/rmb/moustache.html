@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+{% extends 'rmb/base.html' %}
+{% load staticfiles %} <!-- New line -->
+
+
+
+{% block body_block %}
+<div class="container-fluid main-container">
+<div class="row">
+	<!-- sidebars for categories and ratings -->
+		<div class="col-md-2 sidebar">
+			<ul class="nav nav-pills nav-stacked">
+				<li class="active"><a href="">Categories</a></li>
+				<li><a href="{% url 'full' %}">Full Beards</a></li>
+				<li><a href="{% url 'half' %}">Half Beards</a></li>
+				<li><a href="{% url 'moustache' %}">Moustaches</a></li>
+				<li><a href="{% url 'noob' %}">Noob Beards</a></li>
+				<li class="active"><a href="">Ratings</a></li>
+				<li><a href="{% url 'index' %}">Top Beards</a></li>
+				<li><a href="{% url 'index' %}">New Beards</a></li>
+				<li><a id="worst" href="{% url 'worse' %}" data-catid="worst_id">Worst Beards</a></li>
+			</ul>
+		</div>
+
+
+        <div class="col-md-10">
+        <ul class="nav nav-pills nav-stacked">
+				<li class="active"><a href="">Moustaches</a></li>
+		</ul>
+			<div class="jumbotron" id="likes_main">
+                {% for image in all_images %}
+                <div class='image_box'>
+					<ul class='list-inline'>
+                        <li>
+                        <div class="well">
+
+                            <a href={{ image.image.url }}>
+                            <img src="{{image.image.url}}" alt="{{image.name}}" ></a>
+
+                            <div><strong class="uploadedby">Uploaded By: {{ image.img_user }}</strong></div>
+							<div><span class="date">On: {{ image.img_date }}</span></div>
+
+                                {%  for likes in image_likes %}
+                                {%  if likes.image_liked == image %}
+
+                                 <button class ="likes btn btn-circle-sm btn-success" data-catid="{{likes.id}}" /><span  class="glyphicon glyphicon-thumbs-up">{{ likes.likes }}</span></button>
+							     <button class ="dislikes btn btn-circle-sm btn-danger" data-catid2="{{likes.id}}" /><span class="glyphicon glyphicon-thumbs-down">{{ likes.dislikes }}</span></button>
+                                {%  else %}
+                                {% endif %}
+                                {%  endfor %}
+                                <br><br>
+
+                        </div>
+                        </li>
+                     </ul>
+                </div>
+            {%  endfor %}
+            </div>
+        </div>
+
+</div>
+</div>
+{% endblock %}
+

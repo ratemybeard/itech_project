@@ -1,0 +1,41 @@
+html { 
+	font-family:Arial, calibri, sans-serif;
+	color: #333;
+}	
+body {
+	background:#ccc;
+	margin:0;
+}
+#container {
+	width:600px; 
+	margin:0 auto;
+	background:#fff;
+	}
+#header {
+	width:100%
+	height:60px;
+	border-bottom:1px solid #c7c7c7;
+	background:#333;
+}
+#logo {
+	float:left;
+	width:40px;
+	height:40px;
+	margin:10px;
+	background:#ccc;
+	}
+#left_panel {
+	float: left;
+	width:290px;
+	height:200px;
+	border:1px solid black;
+	color: gray;
+	}
+#pin_panel {
+	float: right;
+	width: 600px;
+	height:200px;
+	border:1px solid black;
+	color: black;
+	}
+	

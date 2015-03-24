@@ -1,0 +1,49 @@
+
+
+<!DOCTYPE html>
+
+{% extends 'rmb/base.html' %}
+{% load staticfiles %} <!-- New line -->
+
+
+{% block body_block %}
+
+
+<div class="container-fluid main-container">
+    <div class="row">
+		<div class="col-md-2 sidebar">
+			<ul class="nav nav-pills nav-stacked">
+				<li class="active"><a href="{% url 'index' %} ">Home</a></li>
+				<li><a href="{% url 'index' %} ">Top Beards</a></li>
+				<li><a href="{% url 'newest' %} ">New Beards</a></li>
+				<li><a id="worst" href="#" data-catid="worst_id">Worst Beards</a></li>
+			</ul>
+		</div>
+            <div class="col-md-10">
+                 <div class="jumbotron" id="likes_main">
+
+                     <div class='image_box'>
+                          <form class="upload_form" role="form" method="post"action="/rmb/profile/" enctype="multipart/form-data">
+                              {% csrf_token %}
+                                <h2 class="form-upload-heading">Upload Image</h2>
+
+                                 {% csrf_token %}
+                              {{ upload_image.image }}<br>
+                                <input class="form-control" placeholder="image name" id="id_image" maxlength="30" name="img_name" type="text" required autofocus=""/>
+                         <br>   {{ upload_image.img_cat_id }}<br><br>
+                            <button class="btn btn-lg btn-primary btn-block" type="submit" value="Submit" />Upload</button>
+                         </form>
+                        <br> <br>
+                        <P>Images Uploaded</P>
+                          {% for image in all_images %}
+                            <div class = img-thumbnail>
+                                <a href={{ image.image.url }}>
+                                <img src="{{image.image.url}}" alt="{{image.name}}" >
+                                </a>
+                            </div>
+                            {%  endfor %}
+                     </div>
+            </div>
+        </div>
+</div>
+{% endblock %}
